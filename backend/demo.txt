@@ -1,0 +1,54 @@
+/*
+
+folder struture
+
+backend-------------------------
+                                |
+                                |
+                                |
+                                |----  connection---->congif.js
+                                |
+                                |----  controller --->productController.js
+                                |
+                                |----  public
+                                |        |
+                                |        |
+                                |       assets
+                                |        |
+                                |        |
+                                |       images
+                                |
+                                |
+                                |
+                                |---- modal----->productmodal.js
+                                |
+                                |
+                                |---- routes ---> productRouter.js
+                                |
+                                |----- app.js
+*/
+
+
+
+
+
+export const productDetailsController = async (request, response) => {
+    const { productName, productDetails, productPrice, ratings, addToCart ,Quantity } = request.body;
+    try {
+        const productData = new productModal({
+            productName: productName,
+            productDetails: productDetails,
+            productPrice: productPrice,
+            Quantity: Quantity,
+            ratings: ratings,
+            addToCart: addToCart,
+        });
+
+        await productData.save();
+        response.status(201).json({ productData: productData, msg: "Data Inserted Successfully!" });
+    } catch (error) {
+        response.status(500).json({ status: false, message: "Internal Server Error" });
+    }
+}
+
+
